@@ -4,7 +4,6 @@ import com.sys.empman.common.exception.NotFoundException;
 import com.sys.empman.common.loging.LoginUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,5 +53,11 @@ public class EmployeeService {
         log.debug(LoginUtil.exit("create employee : saved object : " + updateToBe.toString()));
 
         return updateToBe;
+    }
+
+    public boolean deleteEmployee(long id) {
+        log.debug(LoginUtil.invoke("delete employee service with id : " + id ));
+        employeeRepository.deleteById(id);
+        return true;
     }
 }

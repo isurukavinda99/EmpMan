@@ -19,7 +19,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<Object> createEmployee(@RequestBody EmployeeEntity employeeEntity){
 
         log.info(LoginUtil.invoke("create employee controller with object : " +  employeeEntity.toString()));
@@ -53,9 +53,11 @@ public class EmployeeController {
         return employeeService.updateEmployee( id , employeeEntity);
     }
 
-    @DeleteMapping("/")
-    public void deleteEmployee(@RequestBody long id){
-
+    @DeleteMapping("")
+    public HttpStatus deleteEmployee(@RequestParam long id){
+        log.info(LoginUtil.invoke("delete employee controller with id " + id));
+        employeeService.deleteEmployee(id);
+        return HttpStatus.OK;
     }
 
 
