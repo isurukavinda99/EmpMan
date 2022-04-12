@@ -1,4 +1,4 @@
-package com.sys.empman.common;
+package com.sys.empman.common.exception;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {
