@@ -1,11 +1,13 @@
 package com.sys.empman.employee;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity(name = "tbl_employee")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeEntity {
