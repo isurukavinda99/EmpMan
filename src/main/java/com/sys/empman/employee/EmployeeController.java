@@ -24,6 +24,44 @@ public class EmployeeController {
 
         log.info(LoginUtil.invoke("create employee controller with object : " +  employeeEntity.toString()));
 
+        // this method return true if validation process done other vice it will throw error then no need to use 'if-else'
+        this.checkEmployeeValidation(employeeEntity);
+
+        return new ResponseEntity<>(employeeService.createEmployee(employeeEntity) , HttpStatus.CREATED);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<EmployeeEntity> viewEmployee(@RequestParam long id){
+        log.info(LoginUtil.invoke("view employee controller with id : " + id));
+        return new ResponseEntity<>(employeeService.viewEmployee(id) , HttpStatus.OK);
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<List<EmployeeEntity>> viewEmployeeList(){
+        log.info(LoginUtil.invoke("view employee controller list"));
+        return new ResponseEntity<>(employeeService.employeeList() , HttpStatus.OK);
+    }
+
+    @PutMapping("")
+    public EmployeeEntity updateEmpoyee(@RequestBody EmployeeEntity employeeEntity , @RequestParam long id){
+
+        log.info(LoginUtil.invoke("update employee controller with id , object : " + id + " , " + employeeEntity.toString()));
+
+        // this method return true if validation process done other vice it will throw error then no need to use 'if-else'
+        this.checkEmployeeValidation(employeeEntity);
+        return employeeService.updateEmployee( id , employeeEntity);
+    }
+
+    @DeleteMapping("/")
+    public void deleteEmployee(@RequestBody long id){
+
+    }
+
+
+    // helper methods
+    private boolean checkEmployeeValidation(EmployeeEntity employeeEntity) throws ValidationFaildException{
+
         //validations
         if(employeeEntity.getFirstName().isEmpty()){
             throw new ValidationFaildException("give proper first name");
@@ -57,31 +95,7 @@ public class EmployeeController {
             throw new ValidationFaildException("give proper length to phone number");
         }
 
-        return new ResponseEntity<>(employeeService.createEmployee(employeeEntity) , HttpStatus.CREATED);
-
-    }
-
-    @GetMapping("/")
-    public ResponseEntity viewEmployee(@RequestParam long id){
-        log.info(LoginUtil.invoke("view employee controller with id : " + id));
-        return new ResponseEntity(employeeService.viewEmployee(id) , HttpStatus.OK);
-    }
-
-
-    @GetMapping("/list")
-    public ResponseEntity<List<EmployeeEntity>> viewEmployeeList(){
-        log.info(LoginUtil.invoke("view employee controller list"));
-        return new ResponseEntity<>(employeeService.employeeList() , HttpStatus.OK);
-    }
-
-    @PutMapping("/update")
-    public void updateEmpoyee(@RequestBody EmployeeEntity employeeEntity , @RequestParam long id){
-
-    }
-
-    @DeleteMapping("/")
-    public void deleteEmployee(@RequestBody long id){
-
+        return true;
     }
 
 }
